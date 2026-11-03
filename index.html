@@ -6,7 +6,7 @@
 <title>print.smilee — футболки с принтом</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500&family=Manrope:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#ececec;--surface:#fff;--ink:#111;--mute:#6b6b6b;--line:#d4d4d4;--btn:#111;--btn-ink:#fff;--ph:#cfcfcf;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -20,7 +20,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line)}
 .cartbtn{background:none;border:1px solid var(--ink);color:var(--ink);border-radius:99px;padding:8px 16px;font:600 14px Manrope,sans-serif;cursor:pointer}
 .cartbtn b{display:inline-block;min-width:20px;margin-left:6px;background:var(--ink);color:var(--bg);border-radius:99px;font-size:12px;line-height:20px;text-align:center}
-.hero{padding:44px 20px 24px;max-width:1100px;margin:0 auto}
+.hero{display:grid;gap:28px;align-items:center;padding:44px 20px 24px;max-width:1100px;margin:0 auto}
+@media(min-width:760px){.hero{grid-template-columns:1.25fr .75fr}}
 .hero h1{font:italic 400 clamp(40px,9vw,84px)/.95 "Cormorant Garamond",Georgia,serif;margin:0 0 14px;max-width:11em}
 .hero p{margin:0;color:var(--mute);max-width:34em}
 .filters{display:flex;gap:8px;padding:8px 20px 20px;max-width:1100px;margin:0 auto}
@@ -90,6 +91,27 @@ select,input,textarea{font:400 14px Manrope,sans-serif;background:var(--bg);colo
 .addp h3,.mb h3{margin:0}
 .pub{position:sticky;bottom:-20px;background:var(--surface);padding:12px 0 4px}
 .tag{font-size:12px;color:var(--mute)}
+.cta{width:auto;padding:13px 30px;margin-top:22px}
+.filters{scroll-margin-top:64px}
+.tee{width:100%;max-width:320px;margin:0 auto;display:block;filter:drop-shadow(0 18px 22px rgba(0,0,0,.2))}
+.tee .body{stroke:var(--mute);stroke-width:1.2;stroke-opacity:.5;transition:fill .7s}
+.tee .collar{fill:none;stroke:var(--mute);stroke-opacity:.5;stroke-width:1.2}
+.tee.b .body{fill:#151515}.tee.w .body{fill:#fafafa}
+.tee.b text{fill:#f4f4f4}.tee.w text{fill:#111}
+.tee text{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-weight:500;transition:opacity .3s}
+.tee text.in{animation:prt 1.2s ease backwards}
+@keyframes prt{from{opacity:0;letter-spacing:.4em}to{opacity:1;letter-spacing:.02em}}
+@media(prefers-reduced-motion:reduce){.tee text.in{animation:none}}
+.stage{position:relative;container-type:inline-size}
+.ov{position:absolute;left:50%;top:72%;transform:translate(-50%,-50%);max-width:82%;text-align:center;line-height:1.05;font-size:calc(var(--fs,8)*1cqw);white-space:pre-wrap;overflow-wrap:anywhere;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;padding:2px 6px;border:1px dashed transparent;border-radius:4px}
+.ov:hover,.ov:focus-visible,.ov.drag{border-color:currentColor}.ov.drag{cursor:grabbing}
+.ovi{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:calc(var(--is,30)*1%);height:auto;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;border:1px dashed transparent;border-radius:3px}
+.ovi:hover,.ovi:focus-visible,.ovi.drag{border-color:rgba(128,128,128,.9)}.ovi.drag{cursor:grabbing}
+input[type=range]{padding:0;border:0;background:none}
+.lbl{display:block;font-weight:600;font-size:13px;margin:16px 0 6px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.swb{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);padding:0;cursor:pointer}
+.swb[aria-pressed="true"]{outline:2px solid var(--ink);outline-offset:2px}
 [hidden]{display:none!important}
 </style>
 </head>
@@ -101,8 +123,12 @@ select,input,textarea{font:400 14px Manrope,sans-serif;background:var(--bg);colo
 
 <div id="shop">
 <section class="hero">
-  <h1>Футболки с вашим принтом</h1>
-  <p>Фото, цитаты и имена на плотном хлопке. Выберите макет, а имя или текст на принте мы поменяем под вас.</p>
+  <div>
+    <h1>Футболки с вашим принтом</h1>
+    <p>Фото, цитаты и имена на плотном хлопке. Выберите макет, а имя или текст на принте мы поменяем под вас.</p>
+    <button class="go cta" data-act="toshop">Смотреть макеты</button>
+  </div>
+  <svg class="tee b" id="tee" viewBox="0 0 300 320" aria-hidden="true"><path class="body" d="M105 18 L48 42 L8 108 L46 132 L66 106 L66 300 Q66 306 72 306 L228 306 Q234 306 234 300 L234 106 L254 132 L292 108 L252 42 L195 18 Q150 62 105 18 Z"/><path class="collar" d="M112 26 Q150 68 188 26"/><text id="teetx" x="150" y="178" text-anchor="middle"></text></svg>
 </section>
 <div class="filters" role="group" aria-label="Фильтр по цвету">
   <button class="chip" data-act="flt" data-v="all" aria-pressed="true">Все</button>
@@ -173,13 +199,84 @@ const closeModals=()=>$("pm").classList.remove("on");
 
 function openP(id){
   const p=prod(id);if(!p)return;curP=id;const rv=revs(id),a=avg(id);
-  $("pmb").innerHTML=`<button class="x close" data-act="closem" aria-label="Закрыть">×</button><img class="big" src="${esc(p.image_url)}" alt="Футболка «${esc(p.title)}»">
+  $("pmb").innerHTML=`<button class="x close" data-act="closem" aria-label="Закрыть">×</button><div class="stage" id="stg"><img class="big" src="${esc(p.image_url)}" alt="Футболка «${esc(p.title)}»"><img class="ovi" id="ovi" tabindex="0" hidden alt="Ваша картинка. Стрелками можно сдвинуть."><div class="ov" id="ov" tabindex="0" hidden role="img" aria-label="Надпись на футболке. Стрелками можно сдвинуть."></div></div>
   <div class="pi"><h2>${esc(p.title)}</h2><p class="sub">${esc(p.subtitle)}, ${p.color==="black"?"чёрная":"белая"}${p.kids?", детская":""}</p>
-  <div class="row"><span class="price">${rub(p.price)}</span></div><a class="go" style="display:block;text-align:center;text-decoration:none;margin-top:12px" target="_blank" rel="noopener" href="${esc(tgLink("Здравствуйте! Меня интересует футболка «"+p.title+"» ("+rub(p.price)+"): "+location.origin+location.pathname+"#shirt-"+p.id))}">Выбрать эту футболку и написать в Telegram</a>
+  <div class="row"><span class="price">${rub(p.price)}</span></div>${cfgHTML(p)}
   <h3 style="margin:22px 0 4px">Отзывы${rv.length?` (${rv.length}), средняя оценка ${a.toFixed(1)}`:""}</h3>
   ${rv.map(r=>`<div class="rv"><span class="st" aria-label="Оценка ${r.rating} из 5">${stars(r.rating)}</span> <b>${esc(r.author)}</b><p>${esc(r.body)}</p></div>`).join("")||'<p class="sub">Пока нет отзывов. Будьте первым.</p>'}
   <div class="rf" id="rf"><input id="rn" placeholder="Ваше имя" maxlength="40"><select id="rr" aria-label="Оценка"><option value="5">5, отлично</option><option value="4">4</option><option value="3">3</option><option value="2">2</option><option value="1">1</option></select><textarea id="rt" rows="3" maxlength="600" placeholder="Что вам понравилось?"></textarea><div class="err" id="re" role="alert"></div><button class="go" data-act="rsend" style="margin:0">Отправить отзыв</button></div></div>`;
-  $("pm").classList.add("on");
+  initCfg();$("pm").classList.add("on");
+}
+/* ---------- примерка надписи и заказ в Telegram ---------- */
+const SIZES={kids:["92","98","104","110","116","122","128"],adult:["S","M","L","XL","XXL"]};
+const FONTS=[{n:"Классика",f:"'Cormorant Garamond',Georgia,serif",s:"italic",w:500},{n:"Строгий",f:"Manrope,sans-serif",s:"normal",w:700},{n:"От руки",f:"Caveat,cursive",s:"normal",w:600}];
+const COLS=[["Белый","#ffffff"],["Чёрный","#111111"],["Золотой","#c9a24a"]];
+let O={};
+function cfgHTML(p){
+  if(O.img)URL.revokeObjectURL(O.img);
+  O={size:"",text:"",font:0,col:p.color==="black"?"#ffffff":"#111111",x:50,y:72,ix:50,iy:42,is:30,img:""};
+  const sz=p.kids?SIZES.kids:SIZES.adult;
+  return `<div class="cfg"><span class="lbl">${p.kids?"Размер (рост, см)":"Размер"}</span>
+  <div class="chips" role="group" aria-label="Размер">${sz.map(v=>`<button class="chip" data-act="osize" data-v="${v}" aria-pressed="false">${v}</button>`).join("")}</div>
+  <label class="lbl" for="ot">Имя или текст на принте</label>
+  <input id="ot" maxlength="40" placeholder="Например: Саша" autocomplete="off">
+  <span class="lbl">Шрифт</span>
+  <div class="chips" role="group" aria-label="Шрифт">${FONTS.map((f,i)=>`<button class="chip" data-act="ofont" data-v="${i}" aria-pressed="${i===0}" style="font-family:${f.f};font-style:${f.s};font-size:16px">${f.n}</button>`).join("")}</div>
+  <span class="lbl">Цвет надписи</span>
+  <div class="chips" role="group" aria-label="Цвет надписи">${COLS.map(c=>`<button class="swb" data-act="ocol" data-v="${c[1]}" aria-label="${c[0]}" aria-pressed="${c[1]===O.col}" style="background:${c[1]}"></button>`).join("")}</div>
+  <label class="lbl" for="oi">Своя картинка</label>
+  <input type="file" id="oi" accept="image/*">
+  <p class="tag" style="margin:6px 0 0">Она остаётся только на вашем экране. После заказа отправьте её нам в Telegram следующим сообщением.</p>
+  <div id="oimg" hidden><label class="lbl" for="osz">Размер картинки</label><input type="range" id="osz" min="10" max="90" value="30"><button class="rm" data-act="oirm" style="margin:8px 0 0">Убрать картинку</button></div>
+  <p class="tag" style="margin:12px 0 0">Надпись и картинку можно перетащить по фото. Это примерный вид: точное место и шрифт согласуем в Telegram.</p>
+  <div class="err" id="oe" role="alert"></div>
+  <a class="go" id="ordb" data-act="order" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;margin-top:6px">Заказать в Telegram</a></div>`;
+}
+function ovUpd(){const o=$("ov");if(!o)return;const f=FONTS[O.font],t=O.text.trim();o.hidden=!t;o.textContent=O.text;
+  Object.assign(o.style,{fontFamily:f.f,fontStyle:f.s,fontWeight:f.w,color:O.col,left:O.x+"%",top:O.y+"%"});
+  o.style.setProperty("--fs",Math.max(4.5,Math.min(11,64/Math.max(t.length,6))))}
+function ordUpd(){const p=prod(curP),a=$("ordb");if(!p||!a)return;const t=O.text.trim();
+  const msg="Здравствуйте! Хочу заказать футболку «"+p.title+"» ("+rub(p.price)+").\nРазмер: "+(O.size||"—")+
+    (t?"\nТекст на принте: «"+t+"»\nШрифт: "+FONTS[O.font].n+"\nЦвет надписи: "+(COLS.find(c=>c[1]===O.col)||COLS[0])[0].toLowerCase():"")+
+    (O.img?"\nКартинку отправлю следующим сообщением.":"")+
+    "\nМакет: "+location.origin+location.pathname+"#shirt-"+p.id;
+  a.href=tgLink(msg)}
+function initCfg(){
+  const stg=$("stg");if(!stg)return;
+  const cl=(v,a,b)=>Math.min(b,Math.max(a,v));
+  const mk=(el,kx,ky)=>{
+    const put=()=>{el.style.left=O[kx]+"%";el.style.top=O[ky]+"%"};
+    el.addEventListener("pointerdown",e=>{e.preventDefault();el.setPointerCapture(e.pointerId);el.classList.add("drag")});
+    el.addEventListener("pointermove",e=>{if(!el.hasPointerCapture(e.pointerId))return;const r=stg.getBoundingClientRect();
+      O[kx]=cl((e.clientX-r.left)/r.width*100,4,96);O[ky]=cl((e.clientY-r.top)/r.height*100,4,96);put()});
+    el.addEventListener("pointerup",()=>el.classList.remove("drag"));
+    el.addEventListener("keydown",e=>{const m={ArrowLeft:[-2,0],ArrowRight:[2,0],ArrowUp:[0,-2],ArrowDown:[0,2]}[e.key];
+      if(m){e.preventDefault();O[kx]=cl(O[kx]+m[0],4,96);O[ky]=cl(O[ky]+m[1],4,96);put()}});
+  };
+  mk($("ov"),"x","y");mk($("ovi"),"ix","iy");
+  $("ovi").addEventListener("error",()=>{if(!O.img)return;URL.revokeObjectURL(O.img);O.img="";imgUpd();$("oe").textContent="Не удалось открыть картинку. Попробуйте JPG или PNG."});
+  ovUpd();imgUpd();
+}
+function imgUpd(){const i=$("ovi");if(!i)return;
+  if(O.img&&i.getAttribute("src")!==O.img)i.src=O.img;
+  if(!O.img)i.removeAttribute("src");
+  i.hidden=!O.img;i.style.setProperty("--is",O.is);i.style.left=O.ix+"%";i.style.top=O.iy+"%";$("oimg").hidden=!O.img;ordUpd()}
+function setImg(f){const e=$("oe");e.textContent="";if(!f)return;
+  if(!/^image\//.test(f.type)){e.textContent="Выберите файл-картинку.";return}
+  if(f.size>20e6){e.textContent="Картинка слишком большая, нужна до 20 МБ.";return}
+  if(O.img)URL.revokeObjectURL(O.img);O.img=URL.createObjectURL(f);imgUpd()}
+const press=t=>t.parentElement.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b===t));
+let HP=["Аня","Лучший папа","Саша 2026","Наша команда"],heroI=0,heroT=0;
+function heroShow(){const tee=$("tee"),tx=$("teetx");if(!tee||!tx)return;if(heroI>=HP.length)heroI=0;const t=HP[heroI];
+  tee.setAttribute("class","tee "+(heroI%2?"w":"b"));tx.textContent=t;
+  tx.setAttribute("font-size",Math.max(17,Math.min(44,340/Math.max(t.length,1))));
+  tx.classList.remove("in");tx.getBoundingClientRect();tx.classList.add("in");tx.style.opacity=""}
+async function heroTee(){
+  heroShow();
+  try{const r=await api("/rest/v1/settings?key=eq.hero_phrases&select=value");
+    const v=r&&r[0]&&r[0].value;if(Array.isArray(v)&&v.length){HP=v.map(String).filter(Boolean).slice(0,8);heroI=0;heroShow()}}catch(e){}
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches||heroT)return;
+  heroT=setInterval(()=>{if(document.hidden||$("shop").hidden||HP.length<2)return;$("teetx").style.opacity=0;setTimeout(()=>{heroI=(heroI+1)%HP.length;heroShow()},350)},4200);
 }
 async function sendReview(){
   const author=$("rn").value.trim(),body=$("rt").value.trim();
@@ -210,12 +307,14 @@ function renderAdmin(note){
   if(tab===0){
     b=`<div class="addp"><h3>Новая футболка</h3><input type="file" id="nf" accept="image/*" aria-label="Фото"><input id="nt" placeholder="Название"><input id="ns" placeholder="Подпись, например: Именной принт"><div class="two"><select id="nc"><option value="black">Чёрная</option><option value="white">Белая</option></select><input id="np" type="number" min="0" value="3000" aria-label="Цена"><label class="ck"><input type="checkbox" id="nk">детская</label></div><div class="err" id="ae" role="alert"></div><button class="go" style="margin:0" data-act="padd">Добавить в каталог</button></div>`+
     A.P.map(p=>`<div class="ar"><img src="${esc(p.image_url)}" alt=""><div><input data-f="title" data-id="${p.id}" value="${esc(p.title)}" aria-label="Название"><div class="two"><input data-f="price" data-id="${p.id}" type="number" min="0" value="${p.price}" aria-label="Цена"><label class="ck"><input type="checkbox" data-f="hidden" data-id="${p.id}"${p.hidden?" checked":""}>скрыть</label><label class="ck"><input type="checkbox" data-f="kids" data-id="${p.id}"${p.kids?" checked":""}>детская</label></div></div><button class="rm" data-act="pdel" data-id="${p.id}">Удалить</button></div>`).join("");
-  }else{
+  }else if(tab===1){
     b=A.R.map(r=>`<div class="rv"><span class="st">${stars(r.rating)}</span> <b>${esc(r.author)}</b> <span class="tag">о «${esc(ptitle(r.product_id))}», ${r.approved?"на сайте":"ждёт проверки"}</span><p>${esc(r.body)}</p>
     <div class="two">${r.approved?"":`<button class="add" data-act="rok" data-id="${r.id}">Показать на сайте</button>`}<button class="rm" data-act="rdel" data-id="${r.id}">Удалить</button></div></div>`).join("")||'<p class="sub">Отзывов пока нет.</p>';
+  }else{
+    b=`<div class="addp"><h3>Надписи на футболке на главной</h3><p class="tag">По одной надписи в строке, до 8 штук, до 24 символов. Цвет футболки меняется по очереди с чёрного на белый.</p><textarea id="hp" rows="6" aria-label="Надписи">${esc(HP.join("\n"))}</textarea><div class="err" id="he" role="alert"></div><button class="go" style="margin:0" data-act="hsave">Сохранить</button></div>`;
   }
   $("adminView").innerHTML=`<h2 style="font:italic 500 32px 'Cormorant Garamond',Georgia,serif;margin:10px 0 14px">Управление</h2>
-  <div class="tabs">${["Товары","Отзывы"+(newR?` (${newR})`:"")].map((t,i)=>`<button class="chip" data-act="tab" data-v="${i}" aria-pressed="${i===tab}">${t}</button>`).join("")}</div>
+  <div class="tabs">${["Товары","Отзывы"+(newR?` (${newR})`:""),"Главная"].map((t,i)=>`<button class="chip" data-act="tab" data-v="${i}" aria-pressed="${i===tab}">${t}</button>`).join("")}</div>
   <p class="tag" id="note" role="status">${esc(note||"")}</p>${b}`;
 }
 const readImg=f=>new Promise((res,rej)=>{const r=new FileReader();r.onerror=rej;r.onload=()=>{const im=new Image();im.onerror=rej;im.onload=()=>{const k=Math.min(1,800/im.width),c=document.createElement("canvas");c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext("2d").drawImage(im,0,0,c.width,c.height);c.toBlob(b=>b?res(b):rej(),"image/jpeg",.82)};im.src=r.result};r.readAsDataURL(f)});
@@ -242,6 +341,11 @@ async function act(d,t){
    case"pdel":if(confirm("Удалить футболку из каталога?")){await del("products",d.id);await refresh("Удалено")}break;
    case"rok":await patch("reviews",d.id,{approved:true});await refresh("Отзыв показан на сайте");break;
    case"rdel":if(confirm("Удалить отзыв?")){await del("reviews",d.id);await refresh("Удалено")}break;
+   case"hsave":{const v=$("hp").value.split("\n").map(x=>x.trim().slice(0,24)).filter(Boolean).slice(0,8);
+     if(!v.length){$("he").textContent="Напишите хотя бы одну надпись.";break}
+     try{await api("/rest/v1/settings?on_conflict=key",{method:"POST",auth:true,headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:{key:"hero_phrases",value:v}})}
+     catch(x){if(String(x.message)==="auth")throw x;$("he").textContent="Не удалось сохранить. Проверьте, что в Supabase создана таблица settings.";break}
+     HP=v;heroI=0;heroShow();renderAdmin("Сохранено");break}
   }}catch(e){
     if(String(e.message)==="auth"){setS(null);route();return}
     renderAdmin("Не получилось: "+String(e.message).slice(0,160));
@@ -257,6 +361,12 @@ document.addEventListener("click",e=>{
    case"closem":closeModals();break;
    case"flt":filter=d.v;document.querySelectorAll(".filters .chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.v===filter));renderGrid();break;
    case"rsend":sendReview();break;
+   case"osize":O.size=d.v;press(t);$("oe").textContent="";ordUpd();break;
+   case"ofont":O.font=+d.v;press(t);ovUpd();ordUpd();break;
+   case"ocol":O.col=d.v;press(t);ovUpd();ordUpd();break;
+   case"order":if(!O.size){e.preventDefault();$("oe").textContent="Выберите размер, и откроется Telegram с готовым сообщением."}break;
+   case"oirm":if(O.img)URL.revokeObjectURL(O.img);O.img="";$("oi").value="";imgUpd();break;
+   case"toshop":document.querySelector(".filters").scrollIntoView({behavior:"smooth"});break;
    default:act(d,t);
   }
 });
@@ -267,6 +377,10 @@ document.addEventListener("change",async e=>{
     try{await patch("products",t.dataset.id,{[t.dataset.f]:v});$("note").textContent="Сохранено"}catch(x){$("note").textContent="Не удалось сохранить"}
   }
 });
+document.addEventListener("input",e=>{const i=e.target.id;
+  if(i==="ot"){O.text=e.target.value;ovUpd();ordUpd()}
+  else if(i==="osz"){O.is=+e.target.value;$("ovi").style.setProperty("--is",O.is)}});
+document.addEventListener("change",e=>{if(e.target.id==="oi")setImg(e.target.files[0])});
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape"){closeModals()}
   if(e.key==="Enter"&&(e.target.id==="le"||e.target.id==="lp"))login();
@@ -285,6 +399,7 @@ async function route(){
 }
 window.addEventListener("hashchange",route);
 $("tgbtn").href=tgLink();
+heroTee();
 route();
 </script>
 </body>
